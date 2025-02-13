@@ -11,29 +11,32 @@ jobs:
 
     steps:
       - name: 📥 Checkout código
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: 🔑 Autenticarse en GCP
-        uses: google-github-actions/auth@v1
+        uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
 
       - name: 🔧 Configurar gcloud SDK
-        uses: google-github-actions/setup-gcloud@v1
+        uses: google-github-actions/setup-gcloud@v2
         with:
           project_id: mlops-419916
-          install_components: "beta"
+          install_components: "gcr"
 
       - name: 🐳 Construir y subir imagen a Artifact Registry
         run: |
           gcloud auth configure-docker us-central1-docker.pkg.dev
-          docker build -t us-central1-docker.pkg.dev/mlops-419916/mlopsengel/api-inference:latest .
-          docker push us-central1-docker.pkg.dev/mlops-419916/mlopsengel/api-inference:latest
+          docker build -t us-central1-docker.pkg.dev/mlops-419916/mlopsengel/api-inference-deploy:latest api_inference/
+          docker push us-central1-docker.pkg.dev/mlops-419916/mlopsengel/api-inference-deploy:latest
 
       - name: 🚀 Desplegar en Cloud Run
         run: |
-          gcloud run deploy api-inference \
-            --image us-central1-docker.pkg.dev/mlops-419916/mlopsengel/api-inference:latest \
+          gcloud run deploy api-inference-deploy \
+            --image us-central1-docker.pkg.dev/mlops-419916/mlopsengel/api-inference-deploy:latest \
             --platform managed \
             --region us-central1 \
-            --allow-unauthenticated
+            --allow-unauthenticated \
+            --memory=512Mi \
+            --port=8080 \
+            --service-account=${{ secrets.GCP_SERVICE_ACCOUNT }}
