@@ -1,10 +1,10 @@
 import pandas as pd
-import pickle
+import pickle 
 import xgboost as xgb
 from sklearn.model_selection import train_test_split
 
 TRAIN_PATH = "../data/data_train.csv"
-MODEL_PATH = "../xgb_model.pkl"
+MODEL_PATH = "xgb_model.pkl"
 
 class DelayModel:
     def __init__(self):

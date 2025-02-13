@@ -1,0 +1,37 @@
+[
+    {
+        "Fecha-I": "2017-01-11 18:00:00",
+        "OPERA": "Grupo LATAM",
+        "SIGLADES": "Concepcion",
+        "TIPOVUELO": "N",
+        "predicted_delay": 0
+    },
+    {
+        "Fecha-I": "2017-11-14 12:04:00",
+        "OPERA": "Grupo LATAM",
+        "SIGLADES": "Antofagasta",
+        "TIPOVUELO": "N",
+        "predicted_delay": 0
+    },
+    {
+        "Fecha-I": "2017-09-05 11:00:00",
+        "OPERA": "Grupo LATAM",
+        "SIGLADES": "Punta Arenas",
+        "TIPOVUELO": "N",
+        "predicted_delay": 0
+    },
+    {
+        "Fecha-I": "2017-12-18 20:30:00",
+        "OPERA": "Grupo LATAM",
+        "SIGLADES": "Calama",
+        "TIPOVUELO": "N",
+        "predicted_delay": 0
+    },
+    {
+        "Fecha-I": "2017-12-27 12:17:00",
+        "OPERA": "JetSmart SPA",
+        "SIGLADES": "Copiapo",
+        "TIPOVUELO": "N",
+        "predicted_delay": 1
+    }
+]
