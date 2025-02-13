@@ -29,13 +29,14 @@ jobs:
           docker build -t us-central1-docker.pkg.dev/mlops-419916/mlopsengel/api-inference-deploy:latest api_inference/
           docker push us-central1-docker.pkg.dev/mlops-419916/mlopsengel/api-inference-deploy:latest
 
-      - name: 🚀 Desplegar en Cloud Run
+      - name: 🚀 Desplegar en Cloud Run con 4GB RAM
         run: |
           gcloud run deploy api-inference-deploy \
             --image us-central1-docker.pkg.dev/mlops-419916/mlopsengel/api-inference-deploy:latest \
             --platform managed \
             --region us-central1 \
             --allow-unauthenticated \
-            --memory=512Mi \
+            --memory=8Gi \
+            --cpu=2 \
             --port=8080 \
-            --service-account=${{ secrets.GCP_SERVICE_ACCOUNT }}
+            --service-account=ci-cd-deploy@mlops-419916.iam.gserviceaccount.com
