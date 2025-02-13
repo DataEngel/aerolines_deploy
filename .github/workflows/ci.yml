@@ -10,7 +10,7 @@ on:
 
 jobs:
   run-tests:
-    name: Run Unit Tests
+    name: Run Unit & Stress Tests
     runs-on: ubuntu-latest
 
     steps:
@@ -29,3 +29,6 @@ jobs:
 
       - name: ✅ Run Unit Tests
         run: make test
+
+      - name: 🏋️ Run Stress Test
+        run: make stress-test
