@@ -8,12 +8,12 @@ from pydantic import BaseModel
 logging.basicConfig(level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
 
-# Cargar el modelo de la ruta local en Docker
+# Cargar el modelo desde la ruta local en Docker
 model_path = "/app/models/xgb_model.pkl"
 try:
     xgb_model = joblib.load(model_path)
     logger.info(f"✅ Modelo cargado exitosamente desde {model_path}")
-    feature_names = xgb_model.feature_names_in_  # Lista de las features esperadas
+    feature_names = xgb_model.feature_names_in_  # Lista de las features esperadas por el modelo
     logger.info(f"🔍 Features del modelo: {feature_names}")
 except Exception as e:
     logger.error(f"❌ Error al cargar el modelo: {e}")
@@ -46,12 +46,12 @@ def predict_delay(flight_data: FlightData):
         df = pd.get_dummies(df, columns=["OPERA", "TIPOVUELO", "MES"], prefix=["OPERA", "TIPOVUELO", "MES"])
         logger.debug(f"📊 DataFrame después de get_dummies():\n{df}")
 
-        # Asegurar que todas las columnas necesarias estén presentes
+        # 🔹 Rellenar automáticamente columnas faltantes con 0
         for col in feature_names:
             if col not in df.columns:
-                df[col] = 0  # Rellenar columnas faltantes con 0
+                df[col] = 0
 
-        # Reordenar las columnas en el mismo orden del modelo
+        # Ordenar las columnas en el mismo orden que el modelo
         df = df[list(feature_names)]
 
         # Confirmar la forma del DataFrame antes de la predicción
