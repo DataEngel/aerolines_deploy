@@ -6,26 +6,26 @@ on:
       - dev
   pull_request:
     branches:
-      - main
+      - dev
 
 jobs:
-  test:
+  run-tests:
+    name: Run Unit Tests
     runs-on: ubuntu-latest
 
     steps:
-      - name: 📥 Checkout código
+      - name: 📥 Checkout Repository
         uses: actions/checkout@v3
 
-      - name: 🐍 Configurar Python
+      - name: 🐍 Set up Python 3.10
         uses: actions/setup-python@v4
         with:
           python-version: "3.10"
 
-      - name: 📦 Instalar dependencias
+      - name: 📦 Install Dependencies
         run: |
-          pip install --upgrade pip
-          pip install -r requirements.txt
+          python -m pip install --upgrade pip
+          make install
 
-      - name: 🧪 Ejecutar pruebas
-        run: |
-          pytest --maxfail=5 --disable-warnings
+      - name: ✅ Run Unit Tests
+        run: make test
