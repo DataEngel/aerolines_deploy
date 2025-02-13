@@ -1,8 +1,10 @@
 import logging
+import os
 from fastapi import FastAPI, HTTPException
 import pandas as pd
 import joblib
 from pydantic import BaseModel
+import uvicorn
 
 # Configurar logging para FastAPI
 logging.basicConfig(level=logging.DEBUG, format="%(asctime)s - %(levelname)s - %(message)s")
@@ -27,6 +29,10 @@ class FlightData(BaseModel):
     OPERA: str
     MES: int
     TIPOVUELO: str
+
+@app.get("/health")
+def health_check():
+    return {"status": "ok"}
 
 # Endpoint para hacer predicciones
 @app.post("/predict")
@@ -70,3 +76,8 @@ def predict_delay(flight_data: FlightData):
     except Exception as e:
         logger.error(f"❌ Error en el proceso de predicción: {e}")
         raise HTTPException(status_code=500, detail="Error en el procesamiento de la predicción")
+
+# Punto de entrada principal para ejecutar Uvicorn
+if __name__ == "__main__":
+    port = int(os.getenv("PORT", 8080))  # Obtener el puerto desde la variable de entorno
+    uvicorn.run(app, host="0.0.0.0", port=port)
