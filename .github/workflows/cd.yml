@@ -22,7 +22,6 @@ jobs:
         uses: google-github-actions/setup-gcloud@v2
         with:
           project_id: mlops-419916
-          install_components: "gcr"
 
       - name: 🐳 Construir y subir imagen a Artifact Registry
         run: |
