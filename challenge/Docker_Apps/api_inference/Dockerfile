@@ -1,6 +1,7 @@
 # Usa una imagen oficial de Python como base
 FROM python:3.10.12
 
+
 # Establece el directorio de trabajo en el contenedor
 WORKDIR /app
 
@@ -23,5 +24,7 @@ COPY . .
 # Expone el puerto en el que correrá la API
 EXPOSE 8080
 
+
 # Comando para ejecutar la aplicación con Uvicorn
-CMD ["uvicorn", "api:app", "--host", "0.0.0.0", "--port", "8080", "--workers", "4"]
+#CMD ["uvicorn", "api:app", "--host", "0.0.0.0", "--port", "8080", "--workers", "4"]
+CMD ["python", "-m", "uvicorn", "api:app", "--host", "0.0.0.0", "--port", "8080"]

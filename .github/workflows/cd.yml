@@ -1,0 +1,39 @@
+name: CD - Deploy API Inference
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout código
+        uses: actions/checkout@v3
+
+      - name: 🔑 Autenticarse en GCP
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: 🔧 Configurar gcloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          project_id: mlops-419916
+          install_components: "beta"
+
+      - name: 🐳 Construir y subir imagen a Artifact Registry
+        run: |
+          gcloud auth configure-docker us-central1-docker.pkg.dev
+          docker build -t us-central1-docker.pkg.dev/mlops-419916/mlopsengel/api-inference:latest .
+          docker push us-central1-docker.pkg.dev/mlops-419916/mlopsengel/api-inference:latest
+
+      - name: 🚀 Desplegar en Cloud Run
+        run: |
+          gcloud run deploy api-inference \
+            --image us-central1-docker.pkg.dev/mlops-419916/mlopsengel/api-inference:latest \
+            --platform managed \
+            --region us-central1 \
+            --allow-unauthenticated
