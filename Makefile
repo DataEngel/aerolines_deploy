@@ -1,10 +1,14 @@
-.PHONY: install test clean lint format
+.PHONY: install test test-model clean lint format stress-test
 
 install:
 	@pip install -r requirements-dev.txt
 
 test:
 	@python -m unittest discover -s tests/api -p "test_*.py"
+
+#test-model:
+#	@echo "🔍 Ejecutando pruebas unitarias del modelo..."
+#	@python -m unittest discover -s tests/model -p "test_model.py" -v
 
 stress-test:
 	@echo "🏋️ Ejecutando prueba de estrés con Locust..."
