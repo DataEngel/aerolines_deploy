@@ -1,0 +1,4 @@
+# Ignorar credenciales de GCP
+*.json
+!config.json  # (Si tienes otro JSON importante que no sea sensible)
+.gcp/
