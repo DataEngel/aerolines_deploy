@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites><testsuite name="pytest" errors="0" failures="4" skipped="0" tests="4" time="0.630" timestamp="2025-02-13T13:27:58.070229" hostname="Miguels-MacBook-Air.local"><testcase classname="tests.api.test_api.TestInferenceAPI" name="test_should_fail_invalid_flight_type" time="0.032"><failure message="AssertionError: 500 != 400">self = &lt;tests.api.test_api.TestInferenceAPI testMethod=test_should_fail_invalid_flight_type&gt;
+
+    def test_should_fail_invalid_flight_type(self):
+        data = {
+            "OPERA": "Aerolineas Argentinas",
+            "TIPOVUELO": "O",
+            "MES": 3
+        }
+        response = self.client.post("/predict", json=data)
+&gt;       self.assertEqual(response.status_code, 400)
+E       AssertionError: 500 != 400
+
+tests/api/test_api.py:35: AssertionError</failure></testcase><testcase classname="tests.api.test_api.TestInferenceAPI" name="test_should_fail_invalid_month" time="0.002"><failure message="AssertionError: 500 != 400">self = &lt;tests.api.test_api.TestInferenceAPI testMethod=test_should_fail_invalid_month&gt;
+
+    def test_should_fail_invalid_month(self):
+        data = {
+            "OPERA": "Aerolineas Argentinas",
+            "TIPOVUELO": "N",
+            "MES": 13
+        }
+        response = self.client.post("/predict", json=data)
+&gt;       self.assertEqual(response.status_code, 400)
+E       AssertionError: 500 != 400
+
+tests/api/test_api.py:26: AssertionError</failure></testcase><testcase classname="tests.api.test_api.TestInferenceAPI" name="test_should_fail_unknown_airline" time="0.003"><failure message="AssertionError: 500 != 400">self = &lt;tests.api.test_api.TestInferenceAPI testMethod=test_should_fail_unknown_airline&gt;
+
+    def test_should_fail_unknown_airline(self):
+        data = {
+            "OPERA": "Unknown Airline",
+            "TIPOVUELO": "N",
+            "MES": 3
+        }
+        response = self.client.post("/predict", json=data)
+&gt;       self.assertEqual(response.status_code, 400)
+E       AssertionError: 500 != 400
+
+tests/api/test_api.py:44: AssertionError</failure></testcase><testcase classname="tests.api.test_api.TestInferenceAPI" name="test_should_get_prediction" time="0.003"><failure message="AssertionError: 500 != 200">self = &lt;tests.api.test_api.TestInferenceAPI testMethod=test_should_get_prediction&gt;
+
+    def test_should_get_prediction(self):
+        data = {
+            "OPERA": "Aerolineas Argentinas",
+            "TIPOVUELO": "N",
+            "MES": 3
+        }
+        response = self.client.post("/predict", json=data)
+&gt;       self.assertEqual(response.status_code, 200)
+E       AssertionError: 500 != 200
+
+tests/api/test_api.py:16: AssertionError</failure></testcase></testsuite></testsuites>
